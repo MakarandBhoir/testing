@@ -27,21 +27,22 @@ import com.synechron.service.StudentService;
 
 import jakarta.validation.Valid;
 
+// change 1
 @RestController
 @RequestMapping("/student-api")
 public class StudentRestController {
 	@Autowired
 	private StudentService studentService;
-	
+
 	// Method - Get, Url- http://localhost:9091/student-api
 	@GetMapping
 	public List<Student> getAllStudents() {
 		return studentService.findAllStudents();
 	}
-	
+
 	// Method - Post, Url- http://localhost:9091/student-api
 	@PostMapping
-	public ResponseEntity<String> addStudent(@Valid @RequestBody Student student) throws DuplicateStudentException{
+	public ResponseEntity<String> addStudent(@Valid @RequestBody Student student) throws DuplicateStudentException {
 		ResponseEntity<String> response = null;
 		boolean result = studentService.addStudent(student);
 		if (result) {
@@ -51,13 +52,13 @@ public class StudentRestController {
 		}
 		return response;
 	}
-	
+
 	// Method - Get, Url- http://localhost:9091/student-api/1
 	@GetMapping(path = "{studentId}")
 	public Student getStudentById(@PathVariable("studentId") Integer studentId) throws StudentNotFoundException {
 		return studentService.findStudentById(studentId);
 	}
-	
+
 	// Method - Delete, Url- http://localhost:9091/student-api/1
 	@DeleteMapping(path = "{studentId}")
 	public ResponseEntity<String> removeStudent(@PathVariable("studentId") Integer studentId)
@@ -71,9 +72,11 @@ public class StudentRestController {
 		}
 		return response;
 	}
+
 	// Method - Get, http://localhost:9091/student-api/courses/100
 	@GetMapping(path = "courses/{studentId}")
-	public List<Course> getCourseByStudentId(@PathVariable("studentId") Integer studentId) throws StudentNotFoundException{
+	public List<Course> getCourseByStudentId(@PathVariable("studentId") Integer studentId)
+			throws StudentNotFoundException {
 		return studentService.findCoursesByStudentId(studentId);
 	}
 
@@ -89,7 +92,3 @@ public class StudentRestController {
 		return errors;
 	}
 }
-
-
-
-
